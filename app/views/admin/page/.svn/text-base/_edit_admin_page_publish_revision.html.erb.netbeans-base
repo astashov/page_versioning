@@ -1,0 +1,1 @@
+<%= render :partial => 'admin/publish_revision', :locals => { :element => @page, :title => 'page' } %>

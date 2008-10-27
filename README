@@ -1,0 +1,63 @@
+== Page Versioning
+
+This extension allows you to save and review all changes of the pages, snippets 
+and layouts.
+
+== Features:
+ 
+ * All revisions are saved in separate tables and they don't affect to 'pages', 
+   'layouts' and 'snippets' tables.
+ * Pages save their state with page parts
+ * You can set fields you want to version in a config file 
+   (vendor/extensions/page_versioning/config/fields.yml)
+
+== Installation
+
+(from the radiant application root)
+
+1. Just type: script/extension page_versioning
+2. Or you can do this manually:
+
+  git clone git://github.com/aastashov/page_versioning.git vendor/extensions/page_versioning
+  rake RAILS_ENV=production db:migrate:extensions
+
+== Configuration
+
+When you change some fields of Page, Layout or Snippet, they will create new 
+revision.
+It can be configured by vendor/extensions/page_versioning/config/fields.yml
+
+There are two types of settings:
+1. something_attributes - if user changes this attribute, new revision will be 
+   created
+2. something_specific_attributes - these attributes will not be replaced by 
+   revisioned attributes after initializing
+
+== Working of the extension
+
+For enabling versioning you should install the plugin and add changes to some Page, Snippet or Layout.
+Then there will be 3 additional controls:
+
+1. Revision select box - you can change revision you want to see.
+2. Published revision select box - you can set what revision you want to use as 
+   published. Published revision will be shown to visitors.
+3. Preview button - if you want to look at changes, but doesn't want to publish 
+   them, you can press the Preview button. New revision will be created, you will
+   be redirected to homepage and can see your changes, but this revision will not
+   be published and visitors will not see your changes.
+
+On the Snippet Edit Page or Layout Edit Page, you can see Preview button with select box. For preview
+snippet, the snippet should be inserted in some Layout or PagePart. With select box
+you can select page or layout and preview changes of snippet in selected page/layout.
+And the same for layout, you can preview the changes by selecting the page.
+
+== Additionals
+
+Sometimes you can need to disable after_initialize hook, which changes attributes 
+to attributes of published revision. You can do this by setting a flag 
+PageVersioning.enable_versioning = false (default is false for testing environment,
+others - true)
+
+== Authors and Credits
+
+Written by Anton Astashov, with Brenton Cheng, for Astrology.com (a division of iVillage Inc.)

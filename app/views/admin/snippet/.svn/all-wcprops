@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/astrology/!svn/ver/178/trunk/radiant/vendor/extensions/page_versioning/app/views/admin/snippet
+END
+_select_revision.html.haml
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/astrology/!svn/ver/343/trunk/radiant/vendor/extensions/page_versioning/app/views/admin/snippet/_select_revision.html.haml
+END
+_publish_revision.html.haml
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn/astrology/!svn/ver/343/trunk/radiant/vendor/extensions/page_versioning/app/views/admin/snippet/_publish_revision.html.haml
+END
+_preview_button.html.haml
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/astrology/!svn/ver/343/trunk/radiant/vendor/extensions/page_versioning/app/views/admin/snippet/_preview_button.html.haml
+END

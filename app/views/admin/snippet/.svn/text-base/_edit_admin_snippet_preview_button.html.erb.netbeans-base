@@ -1,0 +1,12 @@
+<% unless @snippet.revisions.empty? -%>
+<p class="buttons">
+
+<% options = insert_options_for_snippet_preview -%>
+<% submit_tag_properties = { :name => 'preview', :class => 'button' } -%>
+<% submit_tag_properties[:disabled] = true if options.empty? -%>
+
+<%= submit_tag "Save and Preview", submit_tag_properties %>
+<%= select_tag "page_to_preview", 
+  options_for_select(insert_options_for_snippet_preview)%>
+</p>
+<% end -%>
