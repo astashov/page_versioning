@@ -13,10 +13,7 @@ This extension creates versioning for pages, snippets and layouts.
 == Installation
  
 (from the radiant application root)
- 
-1. Just type: script/extension page_versioning
-2. Or you can do this manually:
- 
+  
   git clone git://github.com/astashov/page_versioning.git vendor/extensions/page_versioning
   rake RAILS_ENV=production db:migrate:extensions
  
