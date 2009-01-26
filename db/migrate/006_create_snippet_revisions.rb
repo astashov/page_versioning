@@ -4,7 +4,7 @@ class CreateSnippetRevisions < ActiveRecord::Migration
       t.integer :snippet_id
       t.integer :number
       t.string :name
-      t.string :content
+      t.text   :content
       t.string :filter_id, :limit => 25
 
       t.timestamps
