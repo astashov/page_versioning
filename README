@@ -47,6 +47,10 @@ snippet, the snippet should be inserted in a Layout or Page Part. With the selec
 you can select a page or layout and preview changes of that snippet in the selected page/layout.
 The same goes for layouts -- you can preview the changes by specifying the page to use for viewing.
  
+== Screenshots
+
+Here you can see screenshot of the plugin: http://astashov.net/radiant_page_versioning.png
+
 == Additional info
  
 Sometimes you might need to disable the after_initialize hook, which changes attributes 
