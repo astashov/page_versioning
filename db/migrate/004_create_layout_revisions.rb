@@ -4,7 +4,7 @@ class CreateLayoutRevisions < ActiveRecord::Migration
       t.integer :layout_id
       t.integer :number
       t.string :name
-      t.string :content
+      t.text   :content
       t.string :content_type
 
       t.timestamps
