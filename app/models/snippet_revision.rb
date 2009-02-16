@@ -5,7 +5,7 @@ class SnippetRevision < ActiveRecord::Base
   
   def increase_number
     snippet = self.snippet
-    self.number = snippet ? snippet.number_of_last_revision + 1 : 1
+    self.number = snippet && snippet.last_revision ? snippet.last_revision.number + 1 : 1
     return true
   end
   

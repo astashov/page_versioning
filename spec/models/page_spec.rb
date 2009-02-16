@@ -31,7 +31,7 @@ describe Page do
     @page.reload
     @page.revisions.length.should == 2
   end
-  
+
   it "should create second PageRevision with number = 2 when Page is updating" do
     page_save(@page)
     @page.title = "Change the title"
@@ -58,17 +58,15 @@ describe Page do
     @page.revisions.length.should == 3
   end
   
-  it "should create PageRevision when PagePart is deleted" do
+  it "should create PageRevision when PagePart is deleted (by hash)" do
     page_save(@page)
-    @page.parts.build(:name => "body", :content => "BODY!")
-    page_save(@page)
-    PagePart.destroy(@page.parts[0])
-    page_save(@page)
-    @page.reload
-    @page.revisions.length.should == 3
+    @page.update_attributes!(:parts => [{:name => "One", :content => "Onetext"}, {:name => "Two", :content => "Twotext"}])
+    lambda do
+      @page.update_attributes!(:parts => [{:name => "One", :content => "Onetext"}])
+    end.should change(@page.reload.revisions, :length).by(1)
   end
   
-  it "should create PageRevision when one of two PagePart is deleted" do
+  it "should create PageRevision when one of two PagePart is deleted (by destroy method)" do
     page_save(@page)
     @page.parts.build(:name => "body", :content => "BODY!")
     page_save(@page)
@@ -86,16 +84,9 @@ describe Page do
     page_save(@page)
     @page.reload
     @page.revisions.length.should == 1
+    @page.status_id.should == 2
   end
-  
-  it "should create PageRevision when Page is changed" do
-    page_save(@page)
-    @page.status_id = 2
-    page_save(@page)
-    @page.reload
-    @page.revisions.length.should == 1
-  end
-  
+
   it "should destroy all dependant PageRevisions when Page is deleted" do
     page_save(@page)
     @page.title = "Change the title"
@@ -125,20 +116,20 @@ describe Page do
     PagePartRevision.find(:all, :conditions => {:page_id => @page.id}).should == []
   end
   
-  it "number_of_last_revision should be equal 0 when Page is not created yet" do
-    @page.number_of_last_revision.should == 0
+  it "last_revision should be nil when Page is not created yet" do
+    @page.last_revision.should be_nil
   end
   
-  it "number_of_last_revision should be equal 1 when Page is created" do
+  it "number of last_revision should be equal 1 when Page is created" do
     page_save(@page)
-    @page.number_of_last_revision.should == 1
+    @page.last_revision.number.should == 1
   end
   
-  it "number_of_last_revision should be equal 2 when Page is updated" do
+  it "number of last_revision should be equal 2 when Page is updated" do
     page_save(@page)
     @page.title = "Change the title"
     page_save(@page)
-    @page.number_of_last_revision.should == 2
+    @page.last_revision.number.should == 2
   end
   
   it "attributes should show as attributes of published revision" do
@@ -158,7 +149,7 @@ describe Page do
     @page.title = "Change title"
     @page.published_revision_number = 0
     page_save(@page)
-    published_revision = PageRevision.find_by_page_id_and_number(@page.id, @page.number_of_last_revision)
+    published_revision = PageRevision.find_by_page_id_and_number(@page.id, @page.last_revision.number)
     @page.published_revision_number.should == published_revision.number
   end
   
@@ -166,7 +157,7 @@ describe Page do
     page_save(@page)
     @page.published_revision_number = 0
     page_save(@page)
-    published_revision = PageRevision.find_by_page_id_and_number(@page.id, @page.number_of_last_revision)
+    published_revision = PageRevision.find_by_page_id_and_number(@page.id, @page.last_revision.number)
     @page.published_revision_number.should == published_revision.number
   end
   
@@ -181,6 +172,13 @@ describe Page do
     @page.contains_snippet?(snippet).should be_true
   end
   
-  
+  it "should set preview to true or false" do
+    page_save(@page)
+    @page.is_preview.should be_false
+    Page.set_preview(@page.id, true)
+    @page.reload.is_preview.should be_true
+    Page.set_preview(@page.id, false)
+    @page.reload.is_preview.should be_false
+  end
 
 end

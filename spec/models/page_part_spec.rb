@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe PagePart do
   
-  before(:each) do
+  before do
     @page = Page.new(valid_page_params)
     @page.parts << PagePart.new(valid_page_part_params)
     page_save(@page)
@@ -19,18 +19,19 @@ describe PagePart do
   
   it "should create PagePartRevision when PagePart is saved" do
     PagePartRevision.exists?(valid_page_part_revision_params).should == true
-    @page_part.revisions.length.should == 1
   end
   
   it "should not create PagePartRevision when PageParts is not changed" do
-    page_save(@page)
-    @page_part.revisions.length.should == 1
+    lambda do
+      page_save(@page)
+    end.should_not change(PagePartRevision, :count)
   end
   
   it "should create PagePartRevision when PagePart is updated" do
     @page.parts[0].content = "Change content!"
-    page_save(@page)
-    @page_part.revisions.length.should == 2
+    lambda do
+      page_save(@page)
+    end.should change(PagePartRevision, :count).by(1)
   end
   
   it "should create PagePartRevision even if only filter_id of PagePart is updated" do
@@ -38,12 +39,6 @@ describe PagePart do
     page_save(@page)
     @page.reload
     @page.parts[0].last_revision.filter_id.should == "Markdown"
-  end
-  
-  it "should create PagePartRevision when Page is updated" do
-    @page.slug = "another-slug"
-    page_save(@page)
-    @page_part.revisions.length.should == 2
   end
   
   it "attributes should show as attributes of published revision" do

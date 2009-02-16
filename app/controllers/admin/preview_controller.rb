@@ -1,25 +1,25 @@
-class Admin::PreviewController < Admin::AbstractModelController
+class Admin::PreviewController < Admin::ResourceController
   
   def page
     @page = Page.find(params[:id])
-    @page.set_to_revision(@page.number_of_last_revision)
+    @page.set_to_revision(@page.last_revision.number)
     display_the_page
   end
   
   def layout
     @page = Page.find(params[:page_to_preview])
-    @layout = Layout.find(params[:id])
+    Layout.set_preview(params[:id], true)
     display_the_page
-    @layout.is_preview = false
-    @layout.save
+  ensure
+    Layout.set_preview(params[:id], false)
   end
   
   def snippet
     @page = Page.find(params[:page_to_preview])
-    @snippet = Snippet.find(params[:id])    
+    Snippet.set_preview(params[:id], true)
     display_the_page
-    @snippet.is_preview = false
-    @snippet.save
+  ensure
+    Snippet.set_preview(params[:id], false)
   end
   
   private
@@ -31,8 +31,8 @@ class Admin::PreviewController < Admin::AbstractModelController
       @response = response
       
       @response.body += '<p><a href="' + url_for(
-        :controller => 'admin/' + params[:action], 
-        :id => instance_variable_get("@#{params[:action]}"),
+        :controller => 'admin/' + CGI.escapeHTML(params[:action].pluralize), 
+        :id => params[:id].to_i,
         :action => 'edit'
       ) + '">Back</a></p>'
       

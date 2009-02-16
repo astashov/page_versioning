@@ -73,7 +73,7 @@ describe Snippet do
     @snippet.name = "first_change"    
     @snippet.published_revision_number = 0
     @snippet.save
-    published_revision = SnippetRevision.find_by_snippet_id_and_number(@snippet.id, @snippet.number_of_last_revision)
+    published_revision = SnippetRevision.find_by_snippet_id_and_number(@snippet.id, @snippet.last_revision.number)
     @snippet.published_revision_number.should == published_revision.number
   end
   
@@ -81,8 +81,17 @@ describe Snippet do
     @snippet.save
     @snippet.published_revision_number = 0
     @snippet.save
-    published_revision = SnippetRevision.find_by_snippet_id_and_number(@snippet.id, @snippet.number_of_last_revision)
+    published_revision = SnippetRevision.find_by_snippet_id_and_number(@snippet.id, @snippet.last_revision.number)
     @snippet.published_revision_number.should == published_revision.number
+  end
+  
+  it "should set preview to true or false" do
+    @snippet.save!
+    @snippet.is_preview.should be_false
+    Snippet.set_preview(@snippet.id, true)
+    @snippet.reload.is_preview.should be_true
+    Snippet.set_preview(@snippet.id, false)
+    @snippet.reload.is_preview.should be_false
   end
   
 end

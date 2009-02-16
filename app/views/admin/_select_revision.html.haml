@@ -1,7 +1,6 @@
 - unless element.revisions.empty?
-  - form_tag send("#{element.class.to_s.underscore}_edit_url", element), :method => :get do
+  - form_tag send("edit_admin_#{element.class.to_s.underscore}_path", element), :method => :get do
     #revision
       %label{ :for => "revision" } Revision
       = insert_select_revision_tag(element)
-      = insert_spinner
       %input{ :type => "submit", :value => "Switch" }

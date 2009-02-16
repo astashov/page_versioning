@@ -5,7 +5,7 @@ class LayoutRevision < ActiveRecord::Base
   
   def increase_number
     layout = self.layout
-    self.number = layout ? layout.number_of_last_revision + 1 : 1
+    self.number = layout && layout.last_revision ? layout.last_revision.number + 1 : 1
     return true
   end
   

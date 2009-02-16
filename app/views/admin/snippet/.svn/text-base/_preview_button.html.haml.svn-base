@@ -1,4 +1,0 @@
-- unless @snippet.revisions.empty?
-  %p.buttons
-    = insert_snippet_preview_submit_tag
-    = select_tag "page_to_preview", options_for_select(insert_options_for_snippet_preview)

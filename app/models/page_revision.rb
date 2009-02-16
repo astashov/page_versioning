@@ -5,12 +5,12 @@ class PageRevision < ActiveRecord::Base
   
   def increase_number
     page = self.page
-    self.number = page ? page.number_of_last_revision + 1 : 1
+    self.number = page && page.last_revision ? page.last_revision.number + 1 : 1
     return true
   end
   
   def parts
-    return PagePartRevision.find_all_by_page_id_and_number(self.page.id, self.number) rescue []
+    return PagePartRevision.find_all_by_page_id_and_number(self.page && self.page.id, self.number)
   end
   
 end

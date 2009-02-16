@@ -1,11 +1,11 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe Admin::SnippetController do
+describe Admin::SnippetsController do
   integrate_views
-  scenario :users
   before(:each) do
-    @snippet = Snippet.create(valid_snippet_params)
-    login_as users(:admin)
+    @snippet = Snippet.create!(valid_snippet_params)
+    @user = User.create!(:name => "Administrator", :login => "admin", :password => "test1", :password_confirmation => "test1")
+    login_as @user
   end
   
   it "should get edit page with second revision" do
@@ -32,31 +32,32 @@ describe Admin::SnippetController do
     response.should have_tag("#snippet_name[value=some_another_title]")
   end  
   
-  it "should create revision even without changes when preview" do
-    previous_length = @snippet.revisions.length
-    post :edit, :id => @snippet.id, :preview => "Save and Preview", 
-      :snippet => { :published_revision_number => 2 }
-    @snippet.reload
-    @snippet.revisions.length.should == previous_length + 1
+  it "should not create revision without changes and don't change pulished revision number when preview" do
+    @snippet.update_attribute(:published_revision_number, 1)
+    lambda do
+      lambda do
+        put :update, :id => @snippet.id, :preview => "Save and Preview", 
+          :snippet => { :published_revision_number => 2 }
+      end.should_not change(@snippet.reload.revisions, :length)
+    end.should_not change(@snippet.reload, :published_revision_number)
   end
   
   it "should save without publishing when preview the layout" do
-    @snippet.published_revision_number = 1
-    @snippet.save
-    post :edit, :id => @snippet.id, :preview => "Save and Preview", 
-      :snippet => { :name => "Title", :published_revision_number => 2 }
-    @snippet.reload
-    @snippet.published_revision_number.should == 1
+    @snippet.save!
+    lambda do 
+      put :update, :id => @snippet.id, :preview => "Save and Preview", 
+        :snippet => { :name => "Title", :published_revision_number => 2 }
+    end.should_not change(@snippet.reload, :published_revision_number)
   end
   
   it "should show preview when preview the layout" do
-    post :edit, :id => @snippet.id, :preview => "Preview a Page", 
+    put :update, :id => @snippet.id, :preview => "Preview a Page", 
       :snippet => { :name => "Title", :published_revision_number => 2 }
     assert_redirected_to preview_url(:id => @snippet.id, :action => 'snippet')
   end
   
   it "should show errors when required fields is not filled" do
-    post :edit, :id => @snippet.id, :preview => "Preview a Page", 
+    put :update, :id => @snippet.id, :preview => "Preview a Page", 
       :snippet => { :name => "", :published_revision_number => 2 }
     assert_response :success 
     response.should render_template("edit")

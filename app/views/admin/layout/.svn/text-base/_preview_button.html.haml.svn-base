@@ -1,8 +1,0 @@
-- unless @layout.revisions.empty?
-  %p.buttons
-    - options = Page.find_all_by_layout_id(@layout.id).map {|p| [ p.title, p.id ]}
-    - submit_tag_properties = { :name => 'preview', :class => 'button' }
-    - submit_tag_properties[:disabled] = true if options.empty?
-
-    = submit_tag "Save and Preview", submit_tag_properties
-    = select_tag "page_to_preview", options_for_select(options)

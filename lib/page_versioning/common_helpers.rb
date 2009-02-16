@@ -14,16 +14,4 @@ module PageVersioning::CommonHelpers
     select_tag "#{title}[published_revision_number]", options_for_published_revision, :id => "#{title}_published_revision_number"
   end
   
-  
-  def insert_spinner
-    image(
-      'spinner.gif', 
-      :class => 'busy', 
-      :id => "busy-revision", 
-      :alt => "",  
-      :title => "", 
-      :style => 'display: none;'
-    ) 
-  end
-  
 end

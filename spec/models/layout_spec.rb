@@ -17,7 +17,7 @@ describe Layout do
   end
   
   it "should create first LayoutRevision when Layout is creating" do
-    @layout.save
+    @layout.save!
     LayoutRevision.exists?(valid_layout_revision_params).should == true
     revisions = LayoutRevision.find(:all, :conditions => valid_layout_revision_params)
     revisions.length.should == 1
@@ -73,7 +73,7 @@ describe Layout do
     @layout.name = "First change"    
     @layout.published_revision_number = 0
     @layout.save
-    published_revision = LayoutRevision.find_by_layout_id_and_number(@layout.id, @layout.number_of_last_revision)
+    published_revision = LayoutRevision.find_by_layout_id_and_number(@layout.id, @layout.last_revision.number)
     @layout.published_revision_number.should == published_revision.number
   end
   
@@ -81,8 +81,17 @@ describe Layout do
     @layout.save
     @layout.published_revision_number = 0
     @layout.save
-    published_revision = LayoutRevision.find_by_layout_id_and_number(@layout.id, @layout.number_of_last_revision)
+    published_revision = LayoutRevision.find_by_layout_id_and_number(@layout.id, @layout.last_revision.number)
     @layout.published_revision_number.should == published_revision.number
+  end
+  
+  it "should set preview to true or false" do
+    @layout.save!
+    @layout.is_preview.should be_false
+    Layout.set_preview(@layout.id, true)
+    @layout.reload.is_preview.should be_true
+    Layout.set_preview(@layout.id, false)
+    @layout.reload.is_preview.should be_false
   end
   
 end
