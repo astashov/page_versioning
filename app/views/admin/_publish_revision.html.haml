@@ -1,6 +1,6 @@
 - unless element.revisions.empty?
   #published_revision
-    %label{ :for => "#{title}_published_revision_number" } Publish Revision:
+    %label{ :for => "#{title}_published_revision_number" } Publish Revision
     = insert_select_published_revision_tag(element, title)
   - if element.published_revision
     = "(published revision: #{element.published_revision_number})"
