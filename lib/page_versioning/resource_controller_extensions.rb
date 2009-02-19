@@ -6,9 +6,6 @@ module PageVersioning::ResourceControllerExtensions
         # 'preview' param exists only if user presses "Preview Page" button
         if params[:preview]
           # We don't need to publish preview.
-          params[model_symbol][:published_revision_number] = model.published_revision_number
-          params[model_symbol][:is_preview] = true
-          # Saving...
           model.update_attributes!(params[model_symbol])
           
           request_attributes = { :id => model.id, :action => model_symbol }
