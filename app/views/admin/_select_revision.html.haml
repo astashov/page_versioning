@@ -5,3 +5,7 @@
         %strong Show Revision
       = insert_select_revision_tag(element)
       %input{ :type => "submit", :value => "Switch" }
+      - if params[:revision] && params[:revision].to_i != element.published_revision_number.to_i
+        %span{:style => "font-size:1.4em; color: red;"} This is not the Published version.
+      - else
+        %span{:style => "font-size:1.4em; color: green;"} This is the Published version.
