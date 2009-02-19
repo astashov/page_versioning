@@ -47,7 +47,8 @@ module PageVersioning::CommonRevisionExtensions
     revision ||= self.last_revision
     return self.attributes unless revision
     
-    attributes = self.attributes
+    attributes = get_attributes
+    
     revision_attributes = delete_specific_revision_attributes(revision.attributes)
     attributes.merge!(revision_attributes)
     attributes
