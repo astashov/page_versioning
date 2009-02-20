@@ -8,7 +8,7 @@ This extension creates versioning for pages, snippets and layouts.
    'layouts' and 'snippets' tables.
  * Pages save their state with page parts.
  * You can set the fields you want to version in a config file.
-   (vendor/extensions/page_versioning/config/fields.yml)
+   (vendor/extensions/page_versioning/config/config.yml)
  
 == Installation
  

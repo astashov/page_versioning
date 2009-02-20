@@ -1,4 +1,3 @@
-FIELDS = YAML.load_file(RAILS_ROOT + "/vendor/extensions/page_versioning/config/fields.yml")
 require 'application'
 # Explicitly load all extensions of Radiant's controllers, models, helpers
 Dir.glob(File.expand_path(File.dirname(__FILE__) + "/lib/**/*.rb")).each do |fullpath|
@@ -13,6 +12,7 @@ module PageVersioning
   class << self
     attr_accessor :enable_versioning
   end
+  Config = YAML.load_file(RAILS_ROOT + "/vendor/extensions/page_versioning/config/config.yml")
 end
 
 class PageVersioningExtension < Radiant::Extension

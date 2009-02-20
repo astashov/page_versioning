@@ -74,7 +74,7 @@ module PageVersioning::CommonRevisionExtensions
     
     # Get only revisioned attributes
     def get_attributes
-      necessary_attributes = FIELDS[klass + '_revision_attributes']
+      necessary_attributes = PageVersioning::Config[klass + '_revision_attributes']
       attributes = self.attributes
       attributes.delete_if { |key, value| !necessary_attributes.include?(key) }
       attributes
@@ -127,7 +127,7 @@ module PageVersioning::CommonRevisionExtensions
     
     # Delete specific attributes (such as 'id', 'created_at', etc.) from revision attributes  
     def delete_specific_revision_attributes(attributes)
-      necessary_attributes = FIELDS[klass + '_revision_specific_attributes']
+      necessary_attributes = PageVersioning::Config[klass + '_revision_specific_attributes']
       attributes.delete_if { |key, value| necessary_attributes.include?(key) }
       attributes
     end

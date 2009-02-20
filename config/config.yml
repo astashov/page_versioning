@@ -1,6 +1,7 @@
 page_revision_attributes: [ title, slug, breadcrumb, description, keywords, layout_id, class_name ]
-page_part_revision_attributes: [ filter_id, content, name, page_id ]
 page_revision_specific_attributes: [ id, created_at, updated_at, number, page_id ]
+
+page_part_revision_attributes: [ filter_id, content, name, page_id ]
 page_part_revision_specific_attributes: [ id, created_at, updated_at, number ]
 
 layout_revision_attributes: [ name, content, content_type ]
@@ -8,3 +9,6 @@ layout_revision_specific_attributes: [ id, layout_id, created_at, updated_at, nu
 
 snippet_revision_attributes: [ name, content, filter_id ]
 snippet_revision_specific_attributes: [ id, snippet_id, created_at, updated_at, number ]
+
+
+publish_new_version: true
