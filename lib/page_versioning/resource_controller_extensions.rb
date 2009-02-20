@@ -2,15 +2,20 @@ module PageVersioning::ResourceControllerExtensions
   def self.included(base)
     base.class_eval do      
       
+      def set_preview_attributes
+        preview_attributes ||= {}
+        preview_attributes.merge!(:id => model.id, :action => model_symbol)
+        preview_attributes[:page_to_preview] = params[:page_to_preview] if params[:page_to_preview]
+        preview_attributes
+      end
+      
+      
       def update_with_preview
-        # 'preview' param exists only if user presses "Preview Page" button
+        # 'preview' param exists only if user presses "Save and Preview" button
         if params[:preview]
-          # We don't need to publish preview.
+          preview_attributes = set_preview_attributes
           model.update_attributes!(params[model_symbol])
-          
-          request_attributes = { :id => model.id, :action => model_symbol }
-          request_attributes[:page_to_preview] = params[:page_to_preview] if params[:page_to_preview]
-          redirect_to preview_url(request_attributes) and return
+          redirect_to preview_url(preview_attributes) and return
         else
           update_without_preview
         end

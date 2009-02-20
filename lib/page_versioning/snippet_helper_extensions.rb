@@ -11,7 +11,7 @@ module PageVersioning::SnippetHelperExtensions
   
   def insert_snippet_preview_submit_tag
     options = insert_options_for_snippet_preview
-    submit_tag_properties = { :name => 'preview', :class => 'button' }
+    submit_tag_properties = { :name => 'preview', :class => 'button', :id => "preview_button" }
     submit_tag_properties[:disabled] = true if options.empty?
     submit_tag "Save and Preview", submit_tag_properties
   end

@@ -1,3 +1,4 @@
 - unless @page.revisions.empty?
-  or 
-  = submit_tag "Save and Preview", :name => 'preview', :class => 'button'
+  #preview_button_block
+    or 
+    = submit_tag "Save and Preview", :name => 'preview', :class => 'button', :id => "preview_button"
