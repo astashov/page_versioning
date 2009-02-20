@@ -3,7 +3,7 @@ module PageVersioning::SnippetHelperExtensions
   # Look for snippet in PagePart contents and Layout contents of mentioned Page.
   # Return Pages what contains this snippet
   def insert_options_for_snippet_preview
-    all_pages = Page.find(:all)    
+    all_pages = Page.find(:all, :order => "title")    
     pages_with_snippet = all_pages.select { |page| page.contains_snippet?(@snippet) }
     pages_with_snippet.map {|page| [ page.title, page.id ]}
   end
