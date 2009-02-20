@@ -21,7 +21,7 @@ This extension creates versioning for pages, snippets and layouts.
  
 When you update any of the fields on Pages, Layouts or Snippets, they will create a new
 revision.
-This behavior can be configured in vendor/extensions/page_versioning/config/fields.yml
+This behavior can be configured in vendor/extensions/page_versioning/config/config.yml
  
 There are two types of settings:
 1. something_attributes - if user changes this attribute, new revision will be 
@@ -36,7 +36,8 @@ there will be 3 additional controls:
  
 1. Revision select box - you can change revision you want to see.
 2. Published revision select box - you can set what revision you want to use as 
-   published. Published revision will be shown to visitors.
+   published. Published revision will be shown to visitors. You can set publish
+   new revision by default or not in vendor/extensions/page_versioning/config/config.yml
 3. Preview button - if you want to look at changes, but don't want to publish 
    them, you can press the Preview button. A new revision will be created, and you will
    be redirected to the homepage where you can see your changes, but this revision will not

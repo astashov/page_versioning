@@ -9,8 +9,9 @@ module PageVersioning::CommonHelpers
   
   
   def insert_select_published_revision_tag(element, title)
-    # Default is 0 ('<next saved revision>')
-    options_for_published_revision = options_for_select(element.revisions.map {|r| [r.number, r.number] } + [['<next saved revision>', 0]], model.published_revision_number)
+    # Default is set in config/config.yml
+    default = PageVersioning::Config['publish_new_version'] ? 0 : model.published_revision_number
+    options_for_published_revision = options_for_select(element.revisions.map {|r| [r.number, r.number] } + [['<next saved revision>', 0]], default)
     select_tag "#{title}[published_revision_number]", options_for_published_revision, :id => "#{title}_published_revision_number"
   end
   
