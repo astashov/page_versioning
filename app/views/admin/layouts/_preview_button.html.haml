@@ -1,9 +1,10 @@
 - unless @layout.revisions.empty?
-  %p.buttons
-    - options = Page.find_all_by_layout_id(@layout.id, :order => "title").map {|p| [ p.title, p.id ]}
-    - submit_tag_properties = { :name => 'preview', :class => 'button', :id => "preview_button" }
-    - submit_tag_properties[:disabled] = true if options.empty?
+  #preview_button_block
+    %p.buttons
+      - options = Page.find_all_by_layout_id(@layout.id, :order => "title").map {|p| [ p.title, p.id ]}
+      - submit_tag_properties = { :name => 'preview', :class => 'button', :id => "preview_button" }
+      - submit_tag_properties[:disabled] = true if options.empty?
 
-    = submit_tag "Save and Preview", submit_tag_properties
-    %span Preview with Page
-    = select_tag "page_to_preview", options_for_select(options)
+      = submit_tag "Save and Preview", submit_tag_properties
+      %span Preview with Page
+      = select_tag "page_to_preview", options_for_select(options)
