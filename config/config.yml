@@ -10,4 +10,4 @@ layout_revision_specific_attributes: [ id, layout_id, created_at, updated_at, nu
 snippet_revision_attributes: [ name, content, filter_id ]
 snippet_revision_specific_attributes: [ id, snippet_id, created_at, updated_at, number ]
 
-publish_new_version: false
+publish_new_version: true
