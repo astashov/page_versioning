@@ -1,3 +1,5 @@
+WARNING!!! For the RadiantCMS < v0.7.0 please use 0.6.9 tag.
+
 == Page Versioning
  
 This extension creates versioning for pages, snippets and layouts.
