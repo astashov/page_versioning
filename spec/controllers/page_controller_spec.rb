@@ -19,6 +19,16 @@ describe Admin::PagesController do
     response.should have_tag("#page_title[value=Uga-buga!]")
   end
   
+  it "should get edit page with special Page type" do
+    page = FileNotFoundPage.create!(valid_page_params.merge(
+        :title => "404", :slug => '404', :parts => [{:name => 'body', :content => "not found"}]
+    ))
+    get :edit, :id => page.id
+    response.should be_success 
+    response.should render_template("edit")
+    response.should have_tag("#page_title[value=#{page.title}]")
+  end
+  
   it "should get edit page with last revision if given revision is not existed" do
     get :edit, :id => @page.id, :revision => 16
     response.should be_success 

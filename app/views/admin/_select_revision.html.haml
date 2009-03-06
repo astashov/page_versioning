@@ -1,5 +1,5 @@
 - unless element.revisions.empty?
-  - form_tag send("edit_admin_#{element.class.to_s.underscore}_path", element), :method => :get do
+  - form_tag send("edit_admin_#{(element.is_a?(Page) ? Page : element.class).to_s.underscore}_path", element), :method => :get do
     #revision
       %label{ :for => "revision" }
         %strong Show Revision
