@@ -11,7 +11,7 @@ module PageVersioning::CommonRevisionExtensions
       end
       
       def self.set_preview(id, value)
-        update_all("is_preview = #{value ? 'true' : 'false'}", ['id = ?', id])
+        update_all(["is_preview = ?", value ? true : false], ['id = ?', id])
       end
       
     end
