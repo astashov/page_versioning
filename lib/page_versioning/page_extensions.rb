@@ -82,10 +82,6 @@ module PageVersioning::PageExtensions
           page_parts_attributes.each_with_index do |page_part_attributes, index|
             previous_part = previous_parts[index]
             return true unless previous_part
-            # 'Cause since Radiant v0.7.0 page_parts are recreated after each saving of page
-            # we shouldn't compare page_id's of old and new page_part - page_id of new page_part is always 'nil' here
-            # (it will be set in after_save callback, look at Page model
-            page_part_attributes.delete('page_id')
             page_part_attributes.each do |field, value|
               return true if value.to_s != previous_part[field].to_s
             end
