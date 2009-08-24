@@ -5,7 +5,9 @@ module PageVersioning::CommonRevisionExtensions
     base.class_eval do
       before_save :add_revision
       
-      # PagePartRevision is not binded to PagePart, it is binded to Page
+      # PagePartRevision is not binded to PagePart, it is binded to Page. Because
+      # different page parts (with their revisions) can be destroyed and created again, but we can
+      # save whole history of Page.
       unless self == PagePart
         has_many :revisions, :dependent => :destroy, :class_name => self.table_name.singularize.camelize + "Revision"
       end

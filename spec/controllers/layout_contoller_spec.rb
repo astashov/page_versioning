@@ -5,7 +5,8 @@ describe Admin::LayoutsController do
   
   before do
     @layout = Layout.create!(valid_layout_params)
-    @user = User.create!(:name => "Administrator", :login => "admin", :password => "test1", :password_confirmation => "test1")
+    @user = User.create!(:name => "Administrator", :login => "admin", 
+      :password => "test1", :password_confirmation => "test1", :developer => true)
     login_as @user
   end
   

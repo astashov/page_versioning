@@ -6,7 +6,7 @@ describe Admin::PreviewController do
     @page = Page.create!(valid_page_params)
     @page.update_attributes!(
       :title => "Changed", 
-      :parts => [{:name => "body", :content => "Lalala"}], 
+      :parts_attributes => [{:name => "body", :content => "Lalala"}], 
       :published_revision_number => @page.published_revision_number + 1 
     )
     @user = User.create!(:name => "Administrator", :login => "admin", :password => "test1", :password_confirmation => "test1")
@@ -14,7 +14,7 @@ describe Admin::PreviewController do
   end  
   
   it "should show preview of pages" do
-    @page.update_attributes!(:parts => [:name => "body", :content => "Fafafa"])
+    @page.update_attributes!(:parts_attributes => [:name => "body", :content => "Fafafa", :id => @page.parts.first.id])
     get :page, :id => @page.id, :action => "edit"
     response.should be_success
     response.body.should include("Fafafa")
@@ -37,7 +37,9 @@ describe Admin::PreviewController do
   it "should show preview of snippet" do
     @snippet = Snippet.create!(valid_snippet_params)
     @page.update_attributes!(
-      :parts => [{:name => "body", :content => 'Fafafa <r:snippet name="new_snippet" />'}], 
+      :parts_attributes => [
+        {:name => "body", :content => 'Fafafa <r:snippet name="new_snippet" />', :id => @page.parts.first.id}
+      ], 
       :published_revision_number => @page.published_revision_number + 1)
     @snippet.update_attributes!(:content => 'Lalala')
     get :snippet, :id => @snippet.id, :page_to_preview => @page.id, :preview => "Save and Preview"

@@ -1,4 +1,4 @@
-require 'application'
+require 'application_controller'
 # Explicitly load all extensions of Radiant's controllers, models, helpers
 Dir.glob(File.expand_path(File.dirname(__FILE__) + "/lib/**/*.rb")).each do |fullpath|
   require fullpath

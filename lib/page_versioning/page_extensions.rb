@@ -64,7 +64,8 @@ module PageVersioning::PageExtensions
         #  Return true if revisioned attributes of the page or any page part were changed.
         def was_changed?
           page_attributes = get_attributes 
-          page_parts_attributes = self.parts.inject([]) { |attrs, part| attrs << part.get_attributes }
+          page_parts = self.parts.select { |part| !part.instance_variable_get("@marked_for_destruction") }
+          page_parts_attributes = page_parts.map { |part| part.get_attributes }
           
           previous_record = self.last_revision
           return true unless previous_record

@@ -21,7 +21,7 @@ describe Admin::PagesController do
   
   it "should get edit page with special Page type" do
     page = FileNotFoundPage.create!(valid_page_params.merge(
-        :title => "404", :slug => '404', :parts => [{:name => 'body', :content => "not found"}]
+        :title => "404", :slug => '404', :parts_attributes => [{:name => 'body', :content => "not found"}]
     ))
     get :edit, :id => page.id
     response.should be_success 

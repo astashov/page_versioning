@@ -58,21 +58,16 @@ describe Page do
     @page.revisions.length.should == 3
   end
   
-  it "should create PageRevision when PagePart is deleted (by hash)" do
-    page_save(@page)
-    @page.update_attributes!(:parts => [{:name => "One", :content => "Onetext"}, {:name => "Two", :content => "Twotext"}])
-    lambda do
-      @page.update_attributes!(:parts => [{:name => "One", :content => "Onetext"}])
-    end.should change(@page.reload.revisions, :length).by(1)
-  end
-  
-  it "should create PageRevision when one of two PagePart is deleted (by destroy method)" do
+  it "should create PageRevision when one of two PagePart is deleted)" do
     page_save(@page)
     @page.parts.build(:name => "body", :content => "BODY!")
     page_save(@page)
     @page.parts.build(:name => "extended", :content => "Extended!")
     page_save(@page)
-    PagePart.destroy(@page.parts[0])
+    @page.update_attributes!(:parts_attributes => [ 
+      { :name => "body", :id => @page.parts.first.id, :_delete => false, :content => "BODY!" },
+      { :id => @page.parts.second.id, :_delete => true }
+    ])
     page_save(@page)
     @page.reload
     @page.revisions.length.should == 4
